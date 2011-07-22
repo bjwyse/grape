@@ -93,6 +93,24 @@ The error format can be specified using `error_format`. Available formats are `:
       error_format :json
     end
 
+## Including Modules
+
+You can use a more modular approach to compose an API by including other modules that implement the `included` callback.
+
+    module TwitterApiStatus
+      def included(api) do
+        api.resource :statuses do
+          get :public_timeline do
+            Tweet.limit(20)
+          end
+        end
+      end
+    end
+
+    class Twitter::API < Grape::API
+      include TwitterApiStatus
+    end
+
 ## Note on Patches/Pull Requests
  
 * Fork the project.
