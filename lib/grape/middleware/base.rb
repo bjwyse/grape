@@ -47,6 +47,7 @@ module Grape
         CONTENT_TYPES = {
           :xml => 'application/xml',
           :json => 'application/json',
+          :jsonp => 'application/javascript',
           :atom => 'application/atom+xml',
           :rss => 'application/rss+xml',
           :txt => 'text/plain'
