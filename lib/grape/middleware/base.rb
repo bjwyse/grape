@@ -47,13 +47,13 @@ module Grape
         CONTENT_TYPES = {
           :xml => 'application/xml',
           :json => 'application/json',
-          :jsonp => 'application/javascript',
+          :jsonp => 'application/json',
           :atom => 'application/atom+xml',
           :rss => 'application/rss+xml',
           :txt => 'text/plain'
         }
         FORMATTERS = {
-          :json => :encode_json,
+          :json => :encode_txt,
           :txt => :encode_txt,
         }
         PARSERS = {
@@ -115,6 +115,16 @@ module Grape
             object.to_json
           else
             MultiJson.encode(object)
+          end
+        end
+
+        def encode_jsonp(object)
+          if object.respond_to? :serializable_hash
+            MultiJson.encode(object.serializable_hash)
+          elsif object.respond_to? :to_json
+            object.to_json[1 .. -2]
+          else
+            MultiJson.encode(object)[1 .. -2]
           end
         end
 
