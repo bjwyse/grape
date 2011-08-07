@@ -54,10 +54,12 @@ module Grape
         }
         FORMATTERS = {
           :json => :encode_txt,
+          :jsonp => :encode_txt,
           :txt => :encode_txt,
         }
         PARSERS = {
-          :json => :decode_json
+          :json => :decode_json,
+          :jsonp => :decode_json
         }
 
         def formatters
@@ -115,16 +117,6 @@ module Grape
             object.to_json
           else
             MultiJson.encode(object)
-          end
-        end
-
-        def encode_jsonp(object)
-          if object.respond_to? :serializable_hash
-            MultiJson.encode(object.serializable_hash)
-          elsif object.respond_to? :to_json
-            object.to_json[1 .. -2]
-          else
-            MultiJson.encode(object)[1 .. -2]
           end
         end
 
