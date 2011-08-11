@@ -53,7 +53,7 @@ module Grape
           :txt => 'text/plain'
         }
         FORMATTERS = {
-          :json => :encode_txt,
+          :json => :encode_json,
           :jsonp => :encode_txt,
           :txt => :encode_txt,
         }
